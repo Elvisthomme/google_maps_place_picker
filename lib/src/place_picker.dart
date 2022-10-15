@@ -15,6 +15,7 @@ import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 
 enum PinState { Preparing, Idle, Dragging }
+
 class PlacePicker extends StatefulWidget {
   final String apiKey;
 
@@ -27,6 +28,7 @@ class PlacePicker extends StatefulWidget {
   final String? hintText;
 
   final String? searchingText;
+
   ///The text in the select here button
   final String selectHereText;
   // final double searchBarHeight;
@@ -53,6 +55,7 @@ class PlacePicker extends StatefulWidget {
   final List<Component>? autocompleteComponents;
   final bool? strictbounds;
   final String? region;
+
   /// If true the [body] and the scaffold's floating widgets should size
   /// themselves to avoid the onscreen keyboard whose height is defined by the
   /// ambient [MediaQuery]'s [MediaQueryData.viewInsets] `bottom` property.
@@ -228,7 +231,8 @@ class _PlacePickerState extends State<PlacePicker> {
               )
             ]);
           } else {
-            children.add(CircularProgressIndicator());
+            children.add(
+                widget.loadingIndicatorWidget ?? CircularProgressIndicator());
           }
 
           return Scaffold(
@@ -307,7 +311,10 @@ class _PlacePickerState extends State<PlacePicker> {
               .updateCurrentLocation(widget.forceAndroidLocationManager),
           builder: (context, snap) {
             if (snap.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(
+                child: widget.loadingIndicatorWidget ??
+                    CircularProgressIndicator(),
+              );
             } else {
               if (provider!.currentPosition == null) {
                 return _buildMap(widget.initialPosition);
@@ -322,7 +329,10 @@ class _PlacePickerState extends State<PlacePicker> {
         future: Future.delayed(Duration(milliseconds: 1)),
         builder: (context, snap) {
           if (snap.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(
+              child:
+                  widget.loadingIndicatorWidget ?? CircularProgressIndicator(),
+            );
           } else {
             return _buildMap(widget.initialPosition);
           }
@@ -344,6 +354,7 @@ class _PlacePickerState extends State<PlacePicker> {
             : SizedBox(width: 15),
         Expanded(
           child: AutoCompleteSearch(
+              loadingIndicatorWidget: widget.loadingIndicatorWidget,
               appBarKey: appBarKey,
               searchBarController: searchBarController,
               sessionToken: provider!.sessionToken,
