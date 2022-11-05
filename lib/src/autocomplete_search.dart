@@ -72,7 +72,7 @@ class AutoCompleteSearchState extends State<AutoCompleteSearch> {
   void initState() {
     super.initState();
     if (widget.initialSearchString != null) {
-      WidgetsBinding.instance!.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         controller.text = widget.initialSearchString!;
         if (widget.searchForInitialValue!) {
           _onSearchInputChange();
@@ -251,7 +251,8 @@ class AutoCompleteSearchState extends State<AutoCompleteSearch> {
           SizedBox(
             height: 24,
             width: 24,
-            child: widget.loadingIndicatorWidget ?? CircularProgressIndicator(strokeWidth: 3),
+            child: widget.loadingIndicatorWidget ??
+                CircularProgressIndicator(strokeWidth: 3),
           ),
           SizedBox(width: 24),
           Expanded(
