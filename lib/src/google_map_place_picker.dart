@@ -287,14 +287,11 @@ class GoogleMapPlacePicker extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 10),
-          RaisedButton(
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Text(
+          ElevatedButton.icon(
+            icon: Icon(Icons.location_on_outlined),
+            label: Text(
               selectHereText,
               style: TextStyle(fontSize: 16),
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(4.0),
             ),
             onPressed: () {
               onPlacePicked!(result);
