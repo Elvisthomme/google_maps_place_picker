@@ -296,6 +296,11 @@ class GoogleMapPlacePicker extends StatelessWidget {
             onPressed: () {
               onPlacePicked!(result);
             },
+            style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                    Theme.of(context).primaryColor,
+                  ),
+                ),
           ),
         ],
       ),
